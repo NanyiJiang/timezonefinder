@@ -95,7 +95,6 @@ class TimezoneFinder:
         self.poly_zone_ids = open(join(dirname(__file__), 'poly_zone_ids.bin'), 'rb')
         self.poly_coord_amount = open(join(dirname(__file__), 'poly_coord_amount.bin'), 'rb')
         self.poly_adr2data = open(join(dirname(__file__), 'poly_adr2data.bin'), 'rb')
-        self.poly_data = open(join(dirname(__file__), 'poly_data.bin'), 'rb')
         self.poly_max_values = open(join(dirname(__file__), 'poly_max_values.bin'), 'rb')
         self.poly_nr2zone_id = open(join(dirname(__file__), 'poly_nr2zone_id.bin'), 'rb')
 
@@ -131,7 +130,6 @@ class TimezoneFinder:
         self.poly_zone_ids.close()
         self.poly_coord_amount.close()
         self.poly_adr2data.close()
-        self.poly_data.close()
         self.poly_max_values.close()
         self.poly_nr2zone_id.close()
         self.hole_poly_ids.close()
@@ -523,11 +521,6 @@ class TimezoneFinder:
                         if inside_polygon(x, y, hole_coordinates):
                             outside_all_holes = False
                             break
-
-                    if outside_all_holes:
-                        if inside_polygon(x, y, self.coords_of(line=polygon_nr)):
-                            # the point is included in this polygon. return its timezone name without further checks
-                            return timezone_names[ids[i]]
 
                 # when after the current polygon only polygons from the same zone remain, return the name of that zone
                 same_element = all_the_same(pointer=i + 1, length=nr_possible_polygons, id_list=ids)
